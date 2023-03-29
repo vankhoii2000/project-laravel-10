@@ -20,7 +20,6 @@
                             {{ __('Admin') }}
                         </x-nav-link>
                     @endif
-
                 </div>
             </div>
 

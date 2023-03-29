@@ -26,7 +26,7 @@ class TableController extends Controller
      */
     public function create()
     {
-        return view('admin.reservations.create');
+        return view('admin.tables.create');
     }
 
     /**
@@ -37,7 +37,22 @@ class TableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'guest_number' => 'required',
+            'status' => 'required',
+            'location' => 'required'
+        ]);
+
+        $table = Table::create([
+            'name' => $request->input('name'),
+            'guest_number' => $request->input('guest_number'),
+            'status' => $request->input('status'),
+            'location' => $request->input('location'),
+        ]);
+
+        $table->save();
+        return redirect('/admin/tables')->with('success', 'Table created successfully!');;
     }
 
     /**
@@ -57,9 +72,10 @@ class TableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Table $table)
     {
-        //
+        // $table = Table::find($id);
+        return view('admin.tables.edit', compact('table'));
     }
 
     /**
@@ -71,7 +87,22 @@ class TableController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'guest_number' => 'required',
+            'status' => 'required',
+            'location' => 'required'
+        ]);
+
+        $table = Table::find($id);
+        $table->update([
+            'name' => $request->input('name'),
+            'guest_number' => $request->input('guest_number'),
+            'status' => $request->input('status'),
+            'location' => $request->input('location')
+        ]);
+        // return redirect('/admin/tables');
+        return to_route('admin.tables.index')->with('success', 'Table updated successfully!');;
     }
 
     /**
@@ -80,8 +111,10 @@ class TableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Table $table)
     {
-        //
+        $table->reservations()->delete();
+        $table->delete();
+        return to_route('admin.tables.index')->with('success', 'Table deleted successfully!');;
     }
 }

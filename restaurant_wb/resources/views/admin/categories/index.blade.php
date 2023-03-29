@@ -71,10 +71,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div>
-                    <img src="restaurant_wb\storage\app\public\categories\0smvXySdIBfxJItGRAZoKxknnxsJSppJhrW6C04f.jpg"
-                        alt="">
-                </div>
             </div>
 
         </div>

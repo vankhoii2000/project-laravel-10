@@ -13,43 +13,72 @@
                 </a>
 
             </div>
-            {{-- @foreach ($categories as $category) --}}
+
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+
                     <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                Name food
+                                Food name
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Image
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Price
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Description
+                            </th>
+                            <th scope="col" class="relative py-3 px-6">
+
+                            </th>
+                            <th scope="col" class="relative py-3 px-6">
+
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b light:bg-gray-900 light:border-gray-700 text-black">
-                            <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap dark:text-black">
-                                Apple MacBook Pro 17"
-                            </th>
-                            <td class="px-6 py-4">
-                                Silver
-                            </td>
-                            <td class="px-6 py-4">
-                                Laptop
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="#"
-                                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            </td>
-                        </tr>
-
+                        @foreach ($menus as $menu)
+                            <tr class="bg-white border-b light:bg-gray-900 light:border-gray-700 text-black">
+                                <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap dark:text-black">
+                                    {{ $menu->name }}
+                                </th>
+                                <td class="px-6 py-4">
+                                    <img src="{{ asset('images/' . $menu->image) }}" alt="img"
+                                        class="w-21 h-20 rounded">
+                                    <p></p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $menu->price }} vnd
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $menu->description }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <a href="{{ route('admin.menus.edit', $menu->id) }}"
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        <button>Edit</button>
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <form action="{{ route('admin.menus.destroy', $menu->id) }}" method="POST"
+                                        onsubmit="return confirm('Are you sure?');">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit"
+                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-            {{-- @endforeach --}}
+
         </div>
     </div>
 </x-admin-layout>

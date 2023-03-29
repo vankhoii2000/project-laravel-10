@@ -36,25 +36,25 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
+
     public function store(Request $request)
     {
-        $generatedImageName = 'image'.time().'-'
-                                    .$request->name.'.'
-                                    .$request->image->extension();
+        $folder = 'category';
+        $generatedImageName = $folder . time() . '-'
+            . $request->name . '.'
+            . $request->image->extension();
 
         $request->image->move(public_path('images'), $generatedImageName);
-                                    
+
         $category = Category::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'image' => $generatedImageName,
-            
         ]);
-        
+
         $category->save();
-        
-        return redirect('/admin/categories');
+
+        return redirect('/admin/categories')->with('success', 'Category created successfully!');
     }
 
 
@@ -95,20 +95,20 @@ class CategoryController extends Controller
             'description' => 'required'
         ]);
         $category = Category::find($id);
-        
-        $generatedImageName = 'image'.time().'-'
-                                    .$request->name.'.'
-                                    .$request->image->extension();
+
+        $generatedImageName = 'image' . time() . '-'
+            . $request->name . '.'
+            . $request->image->extension();
 
         $request->image->move(public_path('images'), $generatedImageName);
-        
+
 
         $category->update([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'image' => $generatedImageName,
         ]);
-        return redirect('/admin/categories');
+        return redirect('/admin/categories')->with('success', 'Category updated successfully!');;
     }
 
     /**
@@ -117,10 +117,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        $categories = Category::find($id);
-        $categories -> delete(); 
-        return redirect('/admin/categories');
+        $category->menus()->detach();
+        $category->delete();
+        return redirect('/admin/categories')->with('success', 'Category deleted successfully!');;
     }
 }

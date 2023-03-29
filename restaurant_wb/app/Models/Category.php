@@ -13,4 +13,8 @@ class Category extends Model
     public $timeStamps = true;
     
     protected $fillable = ['name', 'image', 'description'];
+
+    public function menus(){
+        return $this->belongsToMany(Menu::class, 'category_menu');
+    }
 }
