@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Category;
-use App\Http\Requests\MenuRequest;
 
 class MenuController extends Controller
 {
@@ -40,21 +39,38 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $generatedImageName = 'image' . time() . '-'
-            . $request->name . '.'
-            . $request->image->extension();
+        // $generatedImageName = 'image' . time() . '-'
+        //     . $request->name . '.'
+        //     . $request->image->extension();
 
-        $request->image->move(public_path('images'), $generatedImageName);
+        // $request->image->move(public_path('images'), $generatedImageName);
+
+        // $menu = Menu::create([
+        //     'name' => $request->input('name'),
+        //     'price' => $request->input('price'),
+        //     'description' => $request->input('description'),
+        //     'image' => $generatedImageName,
+
+        // ]);
+
+        // return redirect('/admin/menus')->with('success', 'Menu created successfully!');
+
+
+        $imageName = time() . '.' . $request->image->extension();
+
+        $request->image->move(public_path('images/menus'), $imageName);
 
         $menu = Menu::create([
             'name' => $request->input('name'),
             'price' => $request->input('price'),
             'description' => $request->input('description'),
-            'image' => $generatedImageName,
-
+            'image' => $imageName,
         ]);
+        if ($request->has('categories')) {
+            $menu->categories()->attach($request->categories);
+        }
 
-        return redirect('/admin/menus')->with('success', 'Menu created successfully!');
+        return to_route('admin.menus.index')->with('success', 'Menu created successfully!');
     }
 
     /**
@@ -74,10 +90,10 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Menu $menu)
     {
-        $menu = Menu::find($id);
-        return view('admin.menus.edit', compact('menu'));
+        $categories = Category::all();
+        return view('admin.menus.edit', compact('menu', 'categories'));
     }
 
     /**
@@ -87,31 +103,54 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Menu $menu)
     {
+        //     $request->validate([
+        //         'name' => 'required',
+        //         'description' => 'required',
+        //         'price' => 'required',
+        //     ]);
+
+        //     $menu = Menu::find($id);
+        //     $folder = 'menu';
+
+        //     $generatedImageName = $folder . time() . '-'
+        //         . $request->name . '.'
+        //         . $request->image->extension();
+
+        //     $request->image->move(public_path('images'), $generatedImageName);
+
+        //     $menu->update([
+        //         'name' => $request->input('name'),
+        //         'price' => $request->input('price'),
+        //         'description' => $request->input('description'),
+        //         'image' => $generatedImageName,
+        //     ]);
+
+        //     return redirect('/admin/menus')->with('success', 'Menu updated successfully!');
+        // 
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'price' => 'required',
+            'price' => 'required'
         ]);
-
-        $menu = Menu::find($id);
-        $folder = 'menu';
-
-        $generatedImageName = $folder . time() . '-'
-            . $request->name . '.'
-            . $request->image->extension();
-
-        $request->image->move(public_path('images'), $generatedImageName);
+        $imageName = $menu->image;
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images/menus'), $imageName);
+        }
 
         $menu->update([
             'name' => $request->input('name'),
             'price' => $request->input('price'),
             'description' => $request->input('description'),
-            'image' => $generatedImageName,
+            'image' => $imageName,
         ]);
 
-        return redirect('/admin/menus')->with('success', 'Menu updated successfully!');
+        if ($request->has('categories')) {
+            $menu->categories()->sync($request->categories);
+        }
+        return to_route('admin.menus.index')->with('success', 'Menu updated successfully.');
     }
 
     /**
@@ -122,7 +161,8 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
+        $menu->categories()->detach();
         $menu->delete();
-        return redirect('/admin/menus')->with('success', 'Category deleted successfully!');
+        return to_route('admin.menus.index')->with('danger', 'Menu deleted successfully.');
     }
 }

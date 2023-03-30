@@ -45,8 +45,8 @@
                                     {{ $category->name }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    <img src="{{ asset('images/' . $category->image) }}" alt="img"
-                                        class="w-21 h-20 rounded">
+                                    <img src="{{ asset('images/categories/' . $category->image) }}" alt="img"
+                                        class="w-21 h-18 rounded">
                                     <p></p>
                                 </td>
                                 <td class="px-6 py-4">

@@ -48,9 +48,8 @@
                                     {{ $menu->name }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    <img src="{{ asset('images/' . $menu->image) }}" alt="img"
-                                        class="w-21 h-20 rounded">
-                                    <p></p>
+                                    <img src="{{ asset('images/menus/' . $menu->image) }}" alt="img"
+                                        class="w-21 h-18 rounded">
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $menu->price }} vnd

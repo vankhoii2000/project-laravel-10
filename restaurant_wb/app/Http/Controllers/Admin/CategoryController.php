@@ -39,22 +39,33 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $folder = 'category';
-        $generatedImageName = $folder . time() . '-'
-            . $request->name . '.'
-            . $request->image->extension();
+        // $folder = 'category';
+        // $generatedImageName = $folder . time() . '-'
+        //     . $request->name . '.'
+        //     . $request->image->extension();
 
-        $request->image->move(public_path('images'), $generatedImageName);
+        // $request->image->move(public_path('images'), $generatedImageName);
 
-        $category = Category::create([
+        // $category = Category::create([
+        //     'name' => $request->input('name'),
+        //     'description' => $request->input('description'),
+        //     'image' => $generatedImageName,
+        // ]);
+
+        // $category->save();
+
+        // return redirect('/admin/categories')->with('success', 'Category created successfully!');
+        $imageName = time() . '.' . $request->image->extension();
+
+        $request->image->move(public_path('images/categories'), $imageName);
+
+        $menu = Category::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'image' => $generatedImageName,
+            'image' => $imageName,
         ]);
 
-        $category->save();
-
-        return redirect('/admin/categories')->with('success', 'Category created successfully!');
+        return to_route('admin.categories.index')->with('success', 'Categories created successfully!');
     }
 
 
@@ -88,27 +99,27 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
         $request->validate([
             'name' => 'required',
-            'description' => 'required'
+            'description' => 'required',
         ]);
-        $category = Category::find($id);
+        $imageName = $category->image;
+        if ($request->hasFile('image')) {
 
-        $generatedImageName = 'image' . time() . '-'
-            . $request->name . '.'
-            . $request->image->extension();
+            //Tim ham xoa anh khoi thu muc
 
-        $request->image->move(public_path('images'), $generatedImageName);
-
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images/categories'), $imageName);
+        }
 
         $category->update([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'image' => $generatedImageName,
+            'image' => $imageName,
         ]);
-        return redirect('/admin/categories')->with('success', 'Category updated successfully!');;
+        return to_route('admin.catagories.index')->with('success', 'Categories updated successfully.');
     }
 
     /**
@@ -121,6 +132,6 @@ class CategoryController extends Controller
     {
         $category->menus()->detach();
         $category->delete();
-        return redirect('/admin/categories')->with('success', 'Category deleted successfully!');;
+        return redirect('/admin/categories')->with('success', 'Category deleted successfully!');
     }
 }

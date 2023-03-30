@@ -22,9 +22,9 @@
     <div class="bg-white shadow-md" x-data="{ isOpen: false }">
         <nav class="container px-6 py-8 mx-auto md:flex md:justify-between md:items-center">
             <div class="flex items-center justify-between">
-                <a class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 md:text-2xl hover:text-green-400"
-                    href="#">
-                    TailFood
+                <a class="text-xl font-bold text-green-700 bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 md:text-2xl hover:text-green-400"
+                    href="/" style="font-size: 35px;">
+                    FLOWER Restaurant
                 </a>
                 <!-- Mobile menu button -->
                 <div @click="isOpen = !isOpen" class="flex md:hidden">
@@ -42,16 +42,16 @@
 
             <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
             <div :class="isOpen ? 'flex' : 'hidden'"
-                class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0">
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
-                    href="/">Home</a>
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
-                    href="{{ route('categories.index') }}">Categories</a>
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
-                    href="{{ route('menus.index') }}">Our Menu</a>
-                <a class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
-                    href="{{ route('reservations.step.one') }}">Make Reservation</a>
-
+                class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0"
+                style="font-size: 20px">
+                <a class="text-green-700 bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
+                    href="/">Trang chủ</a>
+                <a class="text-green-700 bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
+                    href="{{ route('categories.index') }}">Thể loại</a>
+                <a class="text-green-700 bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
+                    href="{{ route('menus.index') }}">Thực đơn</a>
+                <a class="text-green-700 bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
+                    href="{{ route('reservations.step.one') }}">Đặt chỗ</a>
             </div>
         </nav>
     </div>
@@ -62,10 +62,10 @@
         <div class="container flex flex-wrap items-center justify-center px-4 py-8 mx-auto lg:justify-between">
             <div class="flex flex-wrap justify-center">
                 <ul class="flex items-center space-x-4 text-white">
-                    <li>Home</li>
-                    <li>About</li>
-                    <li>Contact</li>
-                    <li>Terms</li>
+                    <li>Trang chủ</li>
+                    <li>Về chúng tôi</li>
+                    <li>Liên hệ </li>
+                    <li></li>
                 </ul>
             </div>
             <div class="flex justify-center mt-4 lg:mt-0">

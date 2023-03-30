@@ -30,7 +30,7 @@
                         <div class="sm:col-span-6">
                             <label for="image" class="block text-sm font-medium text-gray-700"> Image </label>
                             <div>
-                                <img class="w-20 h-20" src="{{ asset('images/' . $menu->image) }}" alt="">
+                                <img class="w-20 h-20" src="{{ asset('images/menus/' . $menu->image) }}" alt="">
                             </div>
                             <div class="mt-1">
                                 <input type="file" id="image" name="image"
