@@ -789,18 +789,6 @@ select {
 .mt-8 {
   margin-top: 2rem;
 }
-.mt-5 {
-  margin-top: 1.25rem;
-}
-.mb-5 {
-  margin-bottom: 1.25rem;
-}
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-.mb-8 {
-  margin-bottom: 2rem;
-}
 .block {
   display: block;
 }
@@ -851,9 +839,6 @@ select {
 }
 .h-8 {
   height: 2rem;
-}
-.h-auto {
-  height: auto;
 }
 .h-full {
   height: 100%;
@@ -1048,11 +1033,6 @@ select {
 }
 .overflow-x-auto {
   overflow-x: auto;
-}
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .text-clip {
   text-overflow: clip;
@@ -1377,9 +1357,6 @@ select {
 .text-right {
   text-align: right;
 }
-.indent-8 {
-  text-indent: 2rem;
-}
 .font-mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
@@ -1511,10 +1488,6 @@ select {
 .text-gray-900 {
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
-}
-.text-green-50 {
-  --tw-text-opacity: 1;
-  color: rgb(240 253 244 / var(--tw-text-opacity));
 }
 .text-green-500 {
   --tw-text-opacity: 1;
@@ -2097,10 +2070,6 @@ select {
 
   .md\:overflow-y-auto {
     overflow-y: auto;
-  }
-
-  .md\:text-clip {
-    text-overflow: clip;
   }
 
   .md\:px-0 {
